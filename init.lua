@@ -1,31 +1,5 @@
 --Candy by Ratmonkey--
 
-
-------------------------
---register sugar block--
-------------------------
-
-minetest.register_node("mtcandy:sugar_block", {
-	description = "Sugarblock",
-	tiles = {"mtcandy_sugar_block.png"},
-	groups = {cracky=3,oddly_breakable_by_hand=3},
-	sounds = default.node_sound_stone_defaults(),
-})
-
---------------------------
---recipe for sugar block--
---------------------------
-
-minetest.register_craft({
-	output = "mtcandy:sugar_block",
-	recipe = {
-		{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}, 
-		{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}, 
-		{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}
-	}
-})
-
-
 --------------------
 --register caramel--
 --------------------
@@ -37,16 +11,59 @@ minetest.register_node("mtcandy:caramel", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-----------------------
---recipe for caramel--
-----------------------
+--------------------------
+--recipe for sugar block--
+--------------------------
+if minetest.registered_items["mtfoods:sugar"] ~= nil then
+	minetest.register_craft({
+		output = "mtcandy:sugar_block",
+		recipe = {
+			{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}, 
+			{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}, 
+			{"mtfoods:sugar" ,"mtfoods:sugar" ,"mtfoods:sugar"}
+		}
+	})
+end
 
-minetest.register_craft({
-	type = "cooking",
-	output = "mtcandy:caramel",
-	recipe = "mtcandy:sugar_block",
-})
+if minetest.registered_items["farming:sugar"] ~= nil then
+	minetest.register_craft({
+		output = "mtcandy:sugar_block",
+		recipe = {
+			{"farming:sugar" ,"farming:sugar" ,"farming:sugar"}, 
+			{"farming:sugar" ,"farming:sugar" ,"farming:sugar"}, 
+			{"farming:sugar" ,"farming:sugar" ,"farming:sugar"}
+		}
+	})
+end
 
+if minetest.registered_items["sugar:sugar_block"] ~= nil then
+	----------------------
+	--recipe for caramel--
+	----------------------
+	minetest.register_craft({
+		type = "cooking",
+		output = "mtcandy:caramel",
+		recipe = "sugar:sugar_block",
+	})
+else
+	------------------------
+	--register sugar block--
+	------------------------
+	minetest.register_node("mtcandy:sugar_block", {
+		description = "Sugarblock",
+		tiles = {"mtcandy_sugar_block.png"},
+		groups = {cracky=3,oddly_breakable_by_hand=3},
+		sounds = default.node_sound_stone_defaults(),
+	})
+	----------------------
+	--recipe for caramel--
+	----------------------
+	minetest.register_craft({
+		type = "cooking",
+		output = "mtcandy:caramel",
+		recipe = "mtcandy:sugar_block",
+	})
+end
 
 -----------------------
 --register crosscandy--
